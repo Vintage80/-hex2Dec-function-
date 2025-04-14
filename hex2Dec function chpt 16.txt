@@ -1,0 +1,40 @@
+#include <iostream>
+#include <string>
+#include <stdexcept>
+#include <cctype>
+
+// Function to convert hex string to decimal
+int hex2Dec(const std::string& hex) {
+    int decimal = 0;
+    
+    for (char c : hex) {
+        decimal *= 16;
+
+        if (c >= '0' && c <= '9') {
+            decimal += c - '0';
+        } else if (c >= 'A' && c <= 'F') {
+            decimal += c - 'A' + 10;
+        } else if (c >= 'a' && c <= 'f') {
+            decimal += c - 'a' + 10;
+        } else {
+            throw std::invalid_argument("Invalid hex string: " + hex);
+        }
+    }
+
+    return decimal;
+}
+
+int main() {
+    std::string hexInput;
+    std::cout << "Enter a hexadecimal number: ";
+    std::cin >> hexInput;
+
+    try {
+        int decimal = hex2Dec(hexInput);
+        std::cout << "Decimal value: " << decimal << std::endl;
+    } catch (const std::invalid_argument& ex) {
+        std::cerr << "Error: " << ex.what() << std::endl;
+    }
+
+    return 0;
+}
